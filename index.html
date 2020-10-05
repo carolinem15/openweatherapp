@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Weather App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <style type="text/css">
         button,
         div,
@@ -15,18 +16,22 @@
 </head>
 
 <body>
+    <div class="card">
+        <div class="container">
+            <div class="card-header">
+                <h1>City Search</h1>
+            </div>
+            <div class="card-body">
+                <form id="city-form">
+                    <label for="city-input">Search a city</label>
+                    <input type="text" id="city-input">
+                    <br>
 
-    <div class="container">
-        <h1>City Search</h1>
-
-        <form id="city-form">
-            <label for="city-input">Add a city</label>
-            <input type="text" id="city-input">
-            <br>
-
-            <!-- Button triggers new city to be added -->
-            <input id="run-search" type="submit" value="Add a city">
-        </form>
+                    <!-- Submit button triggers new city to be searched -->
+                    <input id="run-search" type="submit" value="Search">
+                </form>
+            </div>
+        </div>
 
         <div id="cities-view"></div>
 
@@ -56,7 +61,7 @@
                     .trim();
                 console.log(city);
                 var queryURL =
-                // was getting an no CORS error, and upon some research, found that adding this URL prior to the domain for the API helped
+                    // was getting an no CORS error, and upon some research, found that adding this URL prior to the domain for the API helped
                     "https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/weather?q=" + city +
                     "&appid=88fcb46ec4ec41110a398d90f0cce390";
 
