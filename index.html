@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Weather App</title>
+    <style type="text/css">
+        button,
+        div,
+        form,
+        input {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>City Search</h1>
+
+        <form id="city-form">
+            <label for="city-input">Add a city</label>
+            <input type="text" id="city-input">
+            <br>
+
+            <!-- Button triggers new city to be added -->
+            <input id="run-search" type="submit" value="Add a city">
+        </form>
+
+        <div id="cities-view"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            // var cities = ["Charlotte", "New York"];
+
+            // function displayWeatherInfo() {
+
+            //     var city = $(this).attr("data-name");
+            //     var queryURL = "https://api.openweathermap.org" + city + "&APPID=88fcb46ec4ec41110a398d90f0cce390";
+            // };
+
+            function buildQueryURL() {
+                // queryURL is the url we'll use to query the API
+                var queryURL = "https://api.openweathermap.org";
+
+                // Begin building an object to contain our API call's query parameters
+                // Set the API key
+                var queryParams = {
+                    "&APPID": "88fcb46ec4ec41110a398d90f0cce390"
+                };
+
+                // Grab text the user typed into the search input, add to the queryParams object
+                var city = $("#city-input")
+                    .val()
+                    .trim();
+                console.log(city);
+                var queryURL =
+                // was getting an no CORS error, and upon some research, found that adding this URL prior to the domain for the API helped
+                    "https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/weather?q=" + city +
+                    "&appid=88fcb46ec4ec41110a398d90f0cce390";
+
+                // Tried to create an AJAX call, but ran into some issues, so I used fetch
+                fetch(queryURL).then(function (response) {
+                    return response.json();
+                }).then(function (json) {
+                    console.log(json);
+                });
+
+
+                var queryURL = buildQueryURL();
+
+                $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                }).then(function (response) {
+                    console.log(response);
+                });
+                // Creating a div to hold the city
+                var cityDiv = $("<div class='city'>");
+
+                // Storing the temp data
+                var temp = main.temp;
+
+                // Creating an element to have the temp displayed
+                var tempdisp = $("<p>").text("Temperature: " + temp);
+
+                // Displaying the temp
+                tempdisp.append(temp);
+
+                // Storing the icon id
+                var icon = main.icon;
+
+                // Creating an element to have the icon displayed
+                var icondisp = $("<i>").text(icon);
+
+                // Displaying the icon
+                icondisp.append(icon);
+
+                // Storing the humidity
+                var humidity = main.humidity;
+
+                // Creating an element to hold the humidity
+                var humiditydisp = $("<p>").text("Humidity: " + humidity);
+
+                // Displaying the humidity
+                humidityDiv.append(humiditydisp);
+
+                // Storing the wind speed
+                var windspeed = wind.speed;
+
+                // Creating an element to hold the wind speed
+                var windspeeddisp = $("<p>").text("Wind speed: " + windspeed);
+
+                // Appending the wind speed
+                windspeedDiv.append(windspeeddisp);
+            };
+
+
+            $("#city-form").submit(function (event) {
+                // Using the "submit" property in jquery and testing to ensure the button works
+                event.preventDefault();
+                console.log("clicked");
+                var queryURL = buildQueryURL();
+
+                $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                }).then(function (response) {
+                    console.log(response);
+                });
+            });
+        </script>
+    </div>
+</body>
+
+</html>
