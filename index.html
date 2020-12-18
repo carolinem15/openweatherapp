@@ -3,140 +3,119 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Weather App</title>
+    <title>Weather Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <style type="text/css">
-        button,
-        div,
-        form,
-        input {
-            margin: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="style.css">
+    <!-- <script src="script.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <div class="card">
+    <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <div class="card-header">
-                <h1>City Search</h1>
-            </div>
-            <div class="card-body">
-                <form id="city-form">
-                    <label for="city-input">Search a city</label>
-                    <input type="text" id="city-input">
-                    <br>
-
-                    <!-- Submit button triggers new city to be searched -->
-                    <input id="run-search" type="submit" value="Search">
-                </form>
+            <h1 class="display-4">Weather Dashboard</h1>
+            <p class="lead">Search your city.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 no-gutters" id="rightCol">
+            <div class="card" style="width: 30rem;">
+                <div class="card-header bg-transparent">
+                    <h4 class="text-center">Search for a city:</h4>
+                    <!-- Search form -->
+                    <form class="form-inline d-flex justify-content-center md-form form-sm active-cyan-2 mt-2">
+                        <input class="form-control form-control-sm mr-3 w-75" id="cityForm" type="text"
+                            placeholder="Search" aria-label="Search">
+                        <button class="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
             </div>
         </div>
-
-        <div id="cities-view"></div>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script type="text/javascript">
-            // var cities = ["Charlotte", "New York"];
-
-            // function displayWeatherInfo() {
-
-            //     var city = $(this).attr("data-name");
-            //     var queryURL = "https://api.openweathermap.org" + city + "&APPID=88fcb46ec4ec41110a398d90f0cce390";
-            // };
-
-            function buildQueryURL() {
-                // queryURL is the url we'll use to query the API
-                var queryURL = "https://api.openweathermap.org";
-
-                // Begin building an object to contain our API call's query parameters
-                // Set the API key
-                var queryParams = {
-                    "&APPID": "88fcb46ec4ec41110a398d90f0cce390"
-                };
-
-                // Grab text the user typed into the search input, add to the queryParams object
-                var city = $("#city-input")
-                    .val()
-                    .trim();
-                console.log(city);
-                var queryURL =
-                    // was getting an no CORS error, and upon some research, found that adding this URL prior to the domain for the API helped
-                    "https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/weather?q=" + city +
-                    "&appid=88fcb46ec4ec41110a398d90f0cce390";
-
-                // Tried to create an AJAX call, but ran into some issues, so I used fetch
-                fetch(queryURL).then(function (response) {
-                    return response.json();
-                }).then(function (json) {
-                    console.log(json);
-                });
-
-
-                var queryURL = buildQueryURL();
-
-                $.ajax({
-                    url: queryURL,
-                    method: "GET"
-                }).then(function (response) {
-                    console.log(response);
-                });
-                // Creating a div to hold the city
-                var cityDiv = $("<div class='city'>");
-
-                // Storing the temp data
-                var temp = main.temp;
-
-                // Creating an element to have the temp displayed
-                var tempdisp = $("<p>").text("Temperature: " + temp);
-
-                // Displaying the temp
-                tempdisp.append(temp);
-
-                // Storing the icon id
-                var icon = main.icon;
-
-                // Creating an element to have the icon displayed
-                var icondisp = $("<i>").text(icon);
-
-                // Displaying the icon
-                icondisp.append(icon);
-
-                // Storing the humidity
-                var humidity = main.humidity;
-
-                // Creating an element to hold the humidity
-                var humiditydisp = $("<p>").text("Humidity: " + humidity);
-
-                // Displaying the humidity
-                humidityDiv.append(humiditydisp);
-
-                // Storing the wind speed
-                var windspeed = wind.speed;
-
-                // Creating an element to hold the wind speed
-                var windspeeddisp = $("<p>").text("Wind speed: " + windspeed);
-
-                // Appending the wind speed
-                windspeedDiv.append(windspeeddisp);
-            };
-
-
-            $("#city-form").submit(function (event) {
-                // Using the "submit" property in jquery and testing to ensure the button works
-                event.preventDefault();
-                console.log("clicked");
-                var queryURL = buildQueryURL();
-
-                $.ajax({
-                    url: queryURL,
-                    method: "GET"
-                }).then(function (response) {
-                    console.log(response);
-                });
-            });
-        </script>
+        <div class="col-sm-8 no-gutters" id="leftCol">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Special title treatment<i id="icon"></i></h4>
+                    <p class="card-text">Temperature: </p>
+                    <p id="temperature"></p>
+                    <p class="card-text">Humidity: </p>
+                    <p id="humidity"></p>
+                    <p class="card-text">Wind Speed: </p>
+                    <p id="windSpeed"></p>
+                    <p class="card-text">UV Index: </p>
+                    <p id="uvIndex"></p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-auto">
+                                <div class="card-body-F">
+                                    <h4 class="card-title">Date</h4>
+                                    <i class="icon"></i>
+                                    <p id="temperatureF"></p>
+                                    <p id="humidityF"></p>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="card-body-F">
+                                    <h4 class="card-title">Date</h4>
+                                    <i class="icon"></i>
+                                    <p id="temperatureF"></p>
+                                    <p id="humidityF"></p>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="card-body-F">
+                                    <h4 class="card-title">Date</h4>
+                                    <i class="icon"></i>
+                                    <p id="temperatureF"></p>
+                                    <p id="humidityF"></p>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="card-body-F">
+                                    <h4 class="card-title">Date</h4>
+                                    <i class="icon"></i>
+                                    <p id="temperatureF"></p>
+                                    <p id="humidityF"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function buildQueryURL() {
+                // grabbing value of form input
+                var city = $("#cityForm").val()
+                console.log(city)
+                var apiKey = "&appid=" + "0a11ae9ecf201b12ae3c0e4c0e88ff2f"
+                var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + apiKey
+                console.log(queryURL)
+            };
+            $.ajax({
+                url: buildQueryURL(),
+                method: "GET"
+            }).then(function (response) {
+                console.log(response);
+            });
+            // click event that passes in a parameter "btnClick" to represent the event to the click handler
+            $(".button").click(function (btnClick) {
+                buildQueryURL()
+                // stops form from submitting back to itself
+                btnClick.preventDefault();
+                // getting CORS error because I am trying to load the model using file:// instead of http.
+            });
+        });
+    </script>
 </body>
 
 </html>

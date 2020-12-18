@@ -1,18 +1,20 @@
-OpenWeather API Application
+# Weather Dashboard
 
-# Description
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
-Using the OpenWeather API, this application is designed to provide a weather report for any city that a user searches. Temperature, an icon indicating the weather, humidity, and wind speed are displayed in the results.  The purpose of this application is to practice calling web APIs and integrating them into an application. In the future, I would like this application to also enable you to save previously searched locations, favorite frequented cities, and provide a radar tab using a different API. 
+## Description
 
-While building this app, I ran into issues making one of my AJAX calls, so I used fetch instead. Later on in the code, I am able to successfully make my AJAX call. I also ran into a weird bug that resulted in thousands of calls to the API per second, which resulted in me getting my API key blocked by OpenWeather for exceeding the allowed number of calls per minute. Prior to this issue, I was successfully able to log the API results in my console. I also kept getting a no-cors error that I was unable to get rid of. This assignment was great practice for knowing what to look for in the documentation for APIs.
+This weather dashboard is designed to provide a weather report for any city that a user searches using the OpenWeather API. The results display temperature, an icon indicating the weather, humidity, and wind speed.  The purpose of this application is to practice AJAX calls to APIs and have the responses rendered into the browser using jQuery. In the future, I would like this application to also enable you to save previously searched locations, favorite frequented cities, and provide a radar tab using a different API. 
+
+When first building this app, I ran into issues making one of my AJAX calls, so I used fetch instead. I also ran into a weird bug that resulted in thousands of calls to the API per second. I also kept getting a no-CORS error. 
 
 ## Installation
 
-To install our project, click the URL to open the page, and your first stop will be the application homepage. 
+To install this project, navigate to the URL provided. 
 
 ## Usage
 
-The main homepage will contain a field to enter the city you would like to search. Hit "submit" and (ideally) the results will render onto the HTML.
+The main homepage will contain a field to enter the city you would like to search. Hit "submit" and the results will render onto the right side of the page.
 
 ## Credits
 
@@ -20,7 +22,3 @@ Trilogy Education Services
 W3 schools: https://www.w3schools.com/default.asp
 OpenWeather: https://openweathermap.org/
 Stack Overflow: https://stackoverflow.com/
-
-## License
-
-MIT License (https://choosealicense.com)
