@@ -98,10 +98,12 @@
                 var city = $("#cityForm").val()
                 console.log(city)
                 var apiKey = "&appid=" + "0a11ae9ecf201b12ae3c0e4c0e88ff2f"
-                var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + apiKey
+                var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial" +
+                    apiKey
                 return queryURL;
                 console.log(queryURL)
             };
+
             // click event that passes in a parameter "btnClick" to represent the event to the click handler
             $(".button").click(function (btnClick) {
                 var queryURL = buildQueryURL()
@@ -111,6 +113,45 @@
                     method: "GET"
                 }).then(function (response) {
                     console.log(response);
+                    // grabbing the necessary information off of the array and rendering onto browser
+                    var temp = response.main.temp
+                    console.log(temp)
+                    $("#temperature").text(temp + "°F");
+                    var humidity = response.main.humidity
+                    console.log(humidity)
+                    $("#humidity").text(humidity + "%");
+                    var windSpeed = response.wind.speed
+                    console.log(windSpeed)
+                    $("#windSpeed").text(windSpeed + "MPH");
+                    // var icon = response.weather.icon
+                    // console.log(icon)
+                    // $("#icon").text(icon);
+                    var lat = response.coord.lat
+                    console.log(lat)
+                    var lon = response.coord.lon
+                    console.log(lon)
+                    // function to build the URL for the UV index API call
+                    function buildUvURL() {
+                        // grabbing value of lat and long
+                        console.log(lat)
+                        console.log(lon)
+                        var apiKey = "&appid=" + "0a11ae9ecf201b12ae3c0e4c0e88ff2f"
+                        var uvUrl = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat +
+                            "&lon=" + lon + apiKey
+                        return uvUrl;
+                        console.log(uvUrl)
+                    };
+                    var uvUrl = buildUvURL()
+                    // second AJAX call for UV index
+                    $.ajax({
+                        url: uvUrl,
+                        method: "GET"
+                    }).then(function (response) {
+                        console.log(response);
+                        // var uvIndex = response.lat & response.lon
+                        // console.log(uvIndex)
+                        // $("#uvIndex").text(uvIndex + "MPH");
+                    });
                 });
                 // stops form from submitting back to itself
                 btnClick.preventDefault();
