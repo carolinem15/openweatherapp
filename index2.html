@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="style.css">
+    <!-- <script src="script.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Weather Dashboard</h1>
+            <p class="lead">Search your city.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 no-gutters" id="rightCol">
+            <div class="card" style="width: 30rem;">
+                <div class="card-header bg-transparent">
+                    <h4 class="text-center">Search for a city:</h4>
+                    <!-- Search form -->
+                    <form class="form-inline d-flex justify-content-center md-form form-sm active-cyan-2 mt-2">
+                        <input class="form-control form-control-sm mr-3 w-75" id="cityForm" type="text"
+                            placeholder="Search" aria-label="Search">
+                        <button class="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-8 no-gutters" id="leftCol">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Special title treatment<i id="icon"></i></h4>
+                    <p class="card-text">Temperature: </p>
+                    <p id="temperature"></p>
+                    <p class="card-text">Humidity: </p>
+                    <p id="humidity"></p>
+                    <p class="card-text">Wind Speed: </p>
+                    <p id="windSpeed"></p>
+                    <p class="card-text">UV Index: </p>
+                    <p id="uvIndex"></p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-auto">
+                                <div class="card-body-F">
+                                    <h4 class="card-title">Date</h4>
+                                    <i class="icon"></i>
+                                    <p id="temperatureF"></p>
+                                    <p id="humidityF"></p>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="card-body-F">
+                                    <h4 class="card-title">Date</h4>
+                                    <i class="icon"></i>
+                                    <p id="temperatureF"></p>
+                                    <p id="humidityF"></p>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="card-body-F">
+                                    <h4 class="card-title">Date</h4>
+                                    <i class="icon"></i>
+                                    <p id="temperatureF"></p>
+                                    <p id="humidityF"></p>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="card-body-F">
+                                    <h4 class="card-title">Date</h4>
+                                    <i class="icon"></i>
+                                    <p id="temperatureF"></p>
+                                    <p id="humidityF"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function buildQueryURL() {
+                // grabbing value of form input
+                var city = $("#cityForm").val()
+                console.log(city)
+                var apiKey = "&appid=" + "0a11ae9ecf201b12ae3c0e4c0e88ff2f"
+                var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + apiKey
+                console.log(queryURL)
+            };
+            $.ajax({
+                url: buildQueryURL(),
+                method: "GET"
+            }).then(function (response) {
+                console.log(response);
+            });
+            // click event that passes in a parameter "btnClick" to represent the event to the click handler
+            $(".button").click(function (btnClick) {
+                buildQueryURL()
+                // stops form from submitting back to itself
+                btnClick.preventDefault();
+                // getting CORS error because I am trying to load the model using file:// instead of http.
+            });
+        });
+    </script>
+</body>
+
+</html>
