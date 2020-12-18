@@ -40,7 +40,7 @@
         <div class="col-sm-8 no-gutters" id="leftCol">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Special title treatment<i id="icon"></i></h4>
+                    <h4 class="card-title">Special title treatment<img id="wIcon" src="" alt="Weather icon"></h4>
                     <p class="card-text">Temperature: </p>
                     <p id="temperature"></p>
                     <p class="card-text">Humidity: </p>
@@ -123,9 +123,13 @@
                     var windSpeed = response.wind.speed
                     console.log(windSpeed)
                     $("#windSpeed").text(windSpeed + "MPH");
-                    // var icon = response.weather.icon
-                    // console.log(icon)
-                    // $("#icon").text(icon);
+                    // grabbing icon info
+                    var icon = response.weather[0].icon
+                    console.log(icon)
+                    var iconURL = "http://openweathermap.org/img/w/" + icon + ".png";
+                    $('#wIcon').attr('src', iconURL)
+                    $("#icon").text(icon);
+                    // grabbing coordinates for UV index
                     var lat = response.coord.lat
                     console.log(lat)
                     var lon = response.coord.lon
