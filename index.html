@@ -31,9 +31,9 @@
                     </form>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
+                    <li class="list-group-item" id="slot1"></li>
+                    <li class="list-group-item" id="slot2"></li>
+                    <li class="list-group-item" id="slot3"></li>
                 </ul>
             </div>
         </div>
@@ -97,6 +97,7 @@
                 // grabbing value of form input
                 var city = $("#cityForm").val()
                 console.log(city)
+                
                 var apiKey = "&appid=" + "0a11ae9ecf201b12ae3c0e4c0e88ff2f"
                 var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial" +
                     apiKey
@@ -137,8 +138,6 @@
                     // function to build the URL for the UV index API call
                     function buildUvURL() {
                         // grabbing value of lat and long
-                        console.log(lat)
-                        console.log(lon)
                         var apiKey = "&appid=" + "0a11ae9ecf201b12ae3c0e4c0e88ff2f"
                         var uvUrl = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat +
                             "&lon=" + lon + apiKey
@@ -147,18 +146,27 @@
                     };
                     var uvUrl = buildUvURL()
                     // second AJAX call for UV index
-                    $.ajax({
-                        url: uvUrl,
-                        method: "GET"
-                    }).then(function (response) {
-                        console.log(response);
-                        // var uvIndex = response.lat & response.lon
-                        // console.log(uvIndex)
-                        // $("#uvIndex").text(uvIndex + "MPH");
-                    });
+                    // $.ajax({
+                    //     url: uvUrl,
+                    //     method: "GET"
+                    // }).then(function (response) {
+                    //     console.log(response);
+                    //     var lat = response.lat
+                    //     console.log(lat)
+                    //     var lon = response.lon
+                    //     console.log(lon)
+                    // });
+                    $.getJSON(uvUrl).then(function (data) {
+                        console.log(data)
+                    })
                 });
                 // stops form from submitting back to itself
                 btnClick.preventDefault();
+                var city = $("#cityForm").val()
+                // Store
+                localStorage.setItem(city, $("#cityForm").val());
+                // Retrieve
+                document.getElementById("slot").innerHTML = localStorage.getItem(city);
             });
         });
     </script>
