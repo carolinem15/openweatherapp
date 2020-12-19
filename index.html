@@ -177,15 +177,16 @@
                     var lon = response.coord.lon
                     console.log(lon)
                 });
+                buildUvURL()
 
-                function searchHistory() {
-                    var searches = []
-                    var city = $("#cityForm").val()
-                    searches.push(city)
-                    console.log(searches)
-                    localStorage("searches") = $.getJSON(searches)
-                    document.getElementById("slot").innerHTML = localStorage.getItem(searches);
-                }
+                // function searchHistory() {
+                //     var searches = []
+                //     var city = $("#cityForm").val()
+                //     searches.push(city)
+                //     console.log(searches)
+                //     localStorage("searches") = $.getJSON(searches)
+                //     document.getElementById("slot").innerHTML = localStorage.getItem(searches);
+                // }
                 // stops form from submitting back to itself
                 btnClick.preventDefault();
 
