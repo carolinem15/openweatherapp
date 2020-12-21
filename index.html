@@ -93,49 +93,54 @@
     </div>
     <script>
         $(document).ready(function () {
-            function buildQueryURL() {
-                // grabbing value of form input
-                var city = $("#cityForm").val()
-                console.log(city)
-                // document.getElementById("searchLocation").innerHTML = city.text;
-                var apiKey = "&appid=" + "0a11ae9ecf201b12ae3c0e4c0e88ff2f"
-                var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial" +
-                    apiKey
-                return queryURL;
-                console.log(queryURL)
-            };
-
-            // function to build the onecall URL
-            function buildOneUrl() {
-                var queryURL = buildQueryURL()
-                // must make an AJAX call within this function to grab lat and lon values for the api call
-                $.ajax({
-                    url: queryURL,
-                    method: "GET"
-                }).then(function (response) {
-                    console.log(response);
-                    // grabbing value of lat and long
-                    var lat = response.coord.lat
-                    console.log(lat)
-                    var lon = response.coord.lon
-                    console.log(lon)
-                    var apiKey = "&appid=" + "0a11ae9ecf201b12ae3c0e4c0e88ff2f"
-                    var oneUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat +
-                        "&lon=" + lon + "&exclude=hourly" + apiKey
-                    return oneUrl;
-                    console.log(oneUrl)
-
-                });
-            };
 
             // click event that passes in a parameter "btnClick" to represent the event to the click handler
             $(".button").click(function (btnClick) {
-                var oneUrl = buildOneUrl()
-                $.ajax({
-                    url: oneUrl,
-                    method: "GET"
-                }).then(function (response) {
-                    console.log(response);
+                // buildOneUrl();
+                function buildQueryURL() {
+                    // grabbing value of form input
+                    var city = $("#cityForm").val()
+                    console.log(city)
+                    // document.getElementById("searchLocation").innerHTML = city.text;
+                    var apiKey = "&appid=" + "0a11ae9ecf201b12ae3c0e4c0e88ff2f"
+                    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city +
+                        "&units=imperial" +
+                        apiKey
+                    return queryURL;
+                    console.log(queryURL)
+                    $.ajax({
+                        url: queryURL,
+                        method: "GET"
+                    }).then(function (response) {
+                        console.log(response);
+                        // grabbing value of lat and long
+                        let lat = response.coord.lat
+                        console.log(lat)
+                        let lon = response.coord.lon
+                        console.log(lon)
+                        buildOneUrl(lat, lon)
+                    });
+
+                    function buildOneUrl(lat, lon) {
+                        // must make an AJAX call within this function to grab lat and lon values for the api call
+                        var apiKey = "&appid=" + "0a11ae9ecf201b12ae3c0e4c0e88ff2f"
+                        var oneUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat +
+                            "&lon=" + lon + "&exclude=hourly" + apiKey
+                        return oneUrl;
+                        console.log(oneUrl)
+                        $.ajax({
+                            url: oneUrl,
+                            method: "GET"
+                        }).then(function (response) {
+                            console.log(response);
+
+                        });
+                    };
+                    // $.ajax({
+                    //     url: oneUrl,
+                    //     method: "GET"
+                    // }).then(function (response) {
+                    //     console.log(response);
                     // grabbing the necessary information off of the array and rendering onto browser
                     // var temp = response.main.temp
                     // console.log(temp)
@@ -157,30 +162,31 @@
                     // console.log(lat)
                     // var lon = response.coord.lon
                     // console.log(lon)
-                });
+                    // });
 
-                // function searchHistory() {
-                //     var searches = []
-                //     var city = $("#cityForm").val()
-                //     searches.push(city)
-                //     console.log(searches)
-                //     localStorage("searches") = $.getJSON(searches)
-                //     document.getElementById("slot").innerHTML = localStorage.getItem(searches);
-                // }
-            
-                // function searchHistory() {
-                //     var searches = []
-                //     var city = $("#cityForm").val()
-                //     searches.push(city)
-                //     console.log(searches)
-                //     localStorage("searches") = $.getJSON(searches)
-                //     document.getElementById("slot").innerHTML = localStorage.getItem(searches);
-                // }
+                    // function searchHistory() {
+                    //     var searches = []
+                    //     var city = $("#cityForm").val()
+                    //     searches.push(city)
+                    //     console.log(searches)
+                    //     localStorage("searches") = $.getJSON(searches)
+                    //     document.getElementById("slot").innerHTML = localStorage.getItem(searches);
+                    // }
 
-                // stops form from submitting back to itself
-                btnClick.preventDefault();
+                    // function searchHistory() {
+                    //     var searches = []
+                    //     var city = $("#cityForm").val()
+                    //     searches.push(city)
+                    //     console.log(searches)
+                    //     localStorage("searches") = $.getJSON(searches)
+                    //     document.getElementById("slot").innerHTML = localStorage.getItem(searches);
+                    // }
 
-            });
+                    // stops form from submitting back to itself
+                    btnClick.preventDefault();
+
+                }
+            })
         });
     </script>
 </body>
