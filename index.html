@@ -40,7 +40,10 @@
         <div class="col-sm-8 no-gutters" id="leftCol">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title"><p id="cityTitle"></p><img id="wIcon" src=""></h4>
+                    <h4 class="card-title">
+                        <p id="cityTitle"></p><p id="today"></p>
+                        <img id="wIcon" src="">
+                    </h4>
                     <p class="card-text">Temperature: </p>
                     <p id="temperature"></p>
                     <p class="card-text">Humidity: </p>
@@ -55,34 +58,52 @@
                         <div class="row">
                             <div class="col-auto">
                                 <div class="card-body-F">
-                                    <h4 class="card-title">Date</h4>
-                                    <i class="icon"></i>
-                                    <p id="temperatureF"></p>
-                                    <p id="humidityF"></p>
+                                    <h4 class="card-title">
+                                        <p id="day1"></p>
+                                    </h4>
+                                    <img id="forecastIcon1" src="">
+                                    <p id="forecastTemp1"></p>
+                                    <p id="forecastHumidity1"></p>
                                 </div>
                             </div>
                             <div class="col-auto">
                                 <div class="card-body-F">
-                                    <h4 class="card-title">Date</h4>
-                                    <i class="icon"></i>
-                                    <p id="temperatureF"></p>
-                                    <p id="humidityF"></p>
+                                    <h4 class="card-title">
+                                        <p id="day2"></p>
+                                    </h4>
+                                    <img id="forecastIcon2" src="">
+                                    <p id="forecastTemp2"></p>
+                                    <p id="forecastHumidity2"></p>
                                 </div>
                             </div>
                             <div class="col-auto">
                                 <div class="card-body-F">
-                                    <h4 class="card-title">Date</h4>
-                                    <i class="icon"></i>
-                                    <p id="temperatureF"></p>
-                                    <p id="humidityF"></p>
+                                    <h4 class="card-title">
+                                        <p id="day3"></p>
+                                    </h4>
+                                    <img id="forecastIcon3" src="">
+                                    <p id="forecastTemp3"></p>
+                                    <p id="forecastHumidity3"></p>
                                 </div>
                             </div>
                             <div class="col-auto">
                                 <div class="card-body-F">
-                                    <h4 class="card-title">Date</h4>
-                                    <i class="icon"></i>
-                                    <p id="temperatureF"></p>
-                                    <p id="humidityF"></p>
+                                    <h4 class="card-title">
+                                        <p id="day4"></p>
+                                    </h4>
+                                    <img id="forecastIcon4" src="">
+                                    <p id="forecastTemp4"></p>
+                                    <p id="forecastHumidity4"></p>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="card-body-F">
+                                    <h4 class="card-title">
+                                        <p id="day5"></p>
+                                    </h4>
+                                    <img id="forecastIcon5" src="">
+                                    <p id="forecastTemp5"></p>
+                                    <p id="forecastHumidity5"></p>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +114,6 @@
     </div>
     <script>
         $(document).ready(function () {
-
             // global variables lat and lon
             var lat;
             var lon;
@@ -132,6 +152,11 @@
                     console.log(iconURL)
                     $("#wIcon").attr("src", iconURL)
                     $("#icon").text(icon);
+                    var today = response.dt
+                    console.log(today)
+                    var date = new Date(today*1000).toDateString()
+                    console.log(date)
+                    $("#today").text(date);
                 });
                 getForecast();
                 return weatherURL;
@@ -141,13 +166,53 @@
                 // grabbing value of form input
                 var city = $("#cityForm").val()
                 var apiKey = "&appid=" + "0a11ae9ecf201b12ae3c0e4c0e88ff2f"
-                var forecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" +
+                var weatherURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city +
+                    "&units=imperial" +
                     apiKey
                 $.ajax({
-                    url: forecastURL,
+                    url: weatherURL,
                     method: "GET"
                 }).then(function (response) {
-                    console.log(response);
+                    // grabbing lat and lon values for UV index
+                    const lat = response.coord.lat
+                    console.log(lat)
+                    const lon = response.coord.lon
+                    console.log(lon)
+                    // api call for UV values
+                    var apiKey = "&appid=" + "0a11ae9ecf201b12ae3c0e4c0e88ff2f"
+                    var forecastURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat +
+                        "&lon=" + lon + "&exclude=minutely,hourly&units=imperial" + apiKey
+                    $.ajax({
+                        url: forecastURL,
+                        method: "GET"
+                    }).then(function (response) {
+                        console.log(response);
+                        const day1 = response.daily[0].dt
+                        console.log(day1)
+                        var date1 = new Date(day1*1000).toDateString()
+                        console.log(date1)
+                        $("#day1").text(date1);
+                        const day2 = response.daily[1].dt
+                        console.log(day2)
+                        var date2 = new Date(day2*1000).toDateString()
+                        console.log(date2)
+                        $("#day2").text(date2);
+                        const day3 = response.daily[2].dt
+                        console.log(day3)
+                        var date3 = new Date(day3*1000).toDateString()
+                        console.log(date3)
+                        $("#day3").text(date3);
+                        const day4 = response.daily[3].dt
+                        console.log(day4)
+                        var date4 = new Date(day4*1000).toDateString()
+                        console.log(date4)
+                        $("#day4").text(date4);
+                        const day5 = response.daily[4].dt
+                        console.log(day5)
+                        var date5 = new Date(day5*1000).toDateString()
+                        console.log(date5)
+                        $("#day5").text(date5);
+                    });
                 });
             }
 
@@ -178,7 +243,7 @@
                         console.log(response);
                         var UV = response.value
                         console.log(UV)
-                        $("#uvIndex").text(UV);                  
+                        $("#uvIndex").text(UV);
                     });
                 });
             }
