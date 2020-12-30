@@ -318,25 +318,11 @@
 
             function searchHistory() {
                 var searches = []
+                localStorage.setItem("city", city)
                 var city = $("#cityForm").val()
                 searches.push(city)
                 console.log(searches)
-                // document.getElementById("#cityForm").innerHTML = city
                 var txt = $("#slot").text(city);
-            //     // 
-            //     // var city = $("#cityForm").val()
-            //     // 
-            //     // console.log(searches)
-            //     // // localStorage("searches") = $.getJSON(searches)
-            //     // localStorage.setItem()
-            //     // document.getElementById("slot").innerHTML = localStorage.getItem(searches);
-            //     // var city = localStorage.getItem($("#cityForm").val());
-            //     // var searches = [];
-            //     // if (city) {
-            //     //     searches = JSON.parse(city);
-            //     // }
-            //     // searches.push(city);
-            //     // localStorage.setItem("city", JSON.stringify(searches));
             }
             // click event that passes in a parameter "btnClick" to represent the event to the click handler
             $(".button").click(function (btnClick) {
