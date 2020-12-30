@@ -32,8 +32,6 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item" id="slot"></li>
-                    <li class="list-group-item" id="slot2"></li>
-                    <li class="list-group-item" id="slot3"></li>
                 </ul>
             </div>
         </div>
@@ -63,7 +61,9 @@
                                         <p id="day1"></p>
                                     </h4>
                                     <img id="forecastIcon1" src="">
+                                    <p>Temp: </p>
                                     <p id="forecastTemp1"></p>
+                                    <p>Humidity: </p>
                                     <p id="forecastHumidity1"></p>
                                 </div>
                             </div>
@@ -73,7 +73,9 @@
                                         <p id="day2"></p>
                                     </h4>
                                     <img id="forecastIcon2" src="">
+                                    <p>Temp: </p>
                                     <p id="forecastTemp2"></p>
+                                    <p>Humidity: </p>
                                     <p id="forecastHumidity2"></p>
                                 </div>
                             </div>
@@ -83,7 +85,9 @@
                                         <p id="day3"></p>
                                     </h4>
                                     <img id="forecastIcon3" src="">
+                                    <p>Temp: </p>
                                     <p id="forecastTemp3"></p>
+                                    <p>Humidity: </p>
                                     <p id="forecastHumidity3"></p>
                                 </div>
                             </div>
@@ -93,7 +97,9 @@
                                         <p id="day4"></p>
                                     </h4>
                                     <img id="forecastIcon4" src="">
+                                    <p>Temp: </p>
                                     <p id="forecastTemp4"></p>
+                                    <p>Humidity: </p>
                                     <p id="forecastHumidity4"></p>
                                 </div>
                             </div>
@@ -103,7 +109,9 @@
                                         <p id="day5"></p>
                                     </h4>
                                     <img id="forecastIcon5" src="">
+                                    <p>Temp: </p>
                                     <p id="forecastTemp5"></p>
+                                    <p>Humidity: </p>
                                     <p id="forecastHumidity5"></p>
                                 </div>
                             </div>
@@ -198,7 +206,13 @@
                         var iconURL1 = "http://openweathermap.org/img/wn/" + icon1 + "@2x.png";
                         console.log(iconURL1)
                         $("#forecastIcon1").attr("src", iconURL1)
-                        
+                        var temp = response.daily[0].temp.day
+                        console.log(temp)
+                        $("#forecastTemp1").text(temp + "°F");
+                        var humidity = response.daily[0].humidity
+                        console.log(humidity)
+                        $("#forecastHumidity1").text(humidity + "%");
+
                         const day2 = response.daily[1].dt
                         console.log(day2)
                         var date2 = new Date(day2 * 1000).toDateString()
@@ -209,22 +223,63 @@
                         var iconURL2 = "http://openweathermap.org/img/wn/" + icon2 + "@2x.png";
                         console.log(iconURL2)
                         $("#forecastIcon2").attr("src", iconURL2)
+                        var temp = response.daily[1].temp.day
+                        console.log(temp)
+                        $("#forecastTemp2").text(temp + "°F");
+                        var humidity = response.daily[1].humidity
+                        console.log(humidity)
+                        $("#forecastHumidity2").text(humidity + "%");
 
                         const day3 = response.daily[2].dt
                         console.log(day3)
                         var date3 = new Date(day3 * 1000).toDateString()
                         console.log(date3)
                         $("#day3").text(date3);
+                        var icon3 = response.daily[2].weather[0].icon
+                        console.log(icon3)
+                        var iconURL3 = "http://openweathermap.org/img/wn/" + icon3 + "@2x.png";
+                        console.log(iconURL3)
+                        $("#forecastIcon3").attr("src", iconURL3)
+                        var temp = response.daily[2].temp.day
+                        console.log(temp)
+                        $("#forecastTemp3").text(temp + "°F");
+                        var humidity = response.daily[2].humidity
+                        console.log(humidity)
+                        $("#forecastHumidity3").text(humidity + "%");
+
                         const day4 = response.daily[3].dt
                         console.log(day4)
                         var date4 = new Date(day4 * 1000).toDateString()
                         console.log(date4)
                         $("#day4").text(date4);
+                        var icon4 = response.daily[3].weather[0].icon
+                        console.log(icon4)
+                        var iconURL4 = "http://openweathermap.org/img/wn/" + icon4 + "@2x.png";
+                        console.log(iconURL4)
+                        $("#forecastIcon4").attr("src", iconURL4)
+                        var temp = response.daily[3].temp.day
+                        console.log(temp)
+                        $("#forecastTemp4").text(temp + "°F");
+                        var humidity = response.daily[3].humidity
+                        console.log(humidity)
+                        $("#forecastHumidity4").text(humidity + "%");
+
                         const day5 = response.daily[4].dt
                         console.log(day5)
                         var date5 = new Date(day5 * 1000).toDateString()
                         console.log(date5)
                         $("#day5").text(date5);
+                        var icon5 = response.daily[4].weather[0].icon
+                        console.log(icon5)
+                        var iconURL5 = "http://openweathermap.org/img/wn/" + icon5 + "@2x.png";
+                        console.log(iconURL5)
+                        $("#forecastIcon5").attr("src", iconURL5)
+                        var temp = response.daily[4].temp.day
+                        console.log(temp)
+                        $("#forecastTemp5").text(temp + "°F");
+                        var humidity = response.daily[4].humidity
+                        console.log(humidity)
+                        $("#forecastHumidity5").text(humidity + "%");
                     });
                 });
             }
@@ -260,9 +315,29 @@
                     });
                 });
             }
-            // getweather, getforecast, and get uv index functions  call getforecast at the end of getweather
-            // call getUVindex at the end of .then(function()) bc this is where we have access to the response data
 
+            function searchHistory() {
+                var searches = []
+                var city = $("#cityForm").val()
+                searches.push(city)
+                console.log(searches)
+                // document.getElementById("#cityForm").innerHTML = city
+                var txt = $("#slot").text(city);
+            //     // 
+            //     // var city = $("#cityForm").val()
+            //     // 
+            //     // console.log(searches)
+            //     // // localStorage("searches") = $.getJSON(searches)
+            //     // localStorage.setItem()
+            //     // document.getElementById("slot").innerHTML = localStorage.getItem(searches);
+            //     // var city = localStorage.getItem($("#cityForm").val());
+            //     // var searches = [];
+            //     // if (city) {
+            //     //     searches = JSON.parse(city);
+            //     // }
+            //     // searches.push(city);
+            //     // localStorage.setItem("city", JSON.stringify(searches));
+            }
             // click event that passes in a parameter "btnClick" to represent the event to the click handler
             $(".button").click(function (btnClick) {
                 // stops form from submitting back to itself
@@ -272,26 +347,10 @@
                 getWeather();
                 getForecast();
                 getUV();
-
-                //     // grabbing the city you just searched and the date of this forecast for the header -- this code below is new
-                //     // and hasn't been tested
+                searchHistory();
 
             });
         });
-
-
-        // my thought here is to create an empty array and push the city searches to the array, then render them into each "slot"
-        // i also need to display the city and current date in the title heading
-
-        // function searchHistory() {
-        //     var searches = []
-        //     var city = $("#cityForm").val()
-
-        //     searches.push(city)
-        //     console.log(searches)
-        //     localStorage("searches") = $.getJSON(searches)
-        //     document.getElementById("slot").innerHTML = localStorage.getItem(searches);
-        // }
     </script>
 </body>
 
